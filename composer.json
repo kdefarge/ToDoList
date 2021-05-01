@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "kdefarge/to-do-list",
+    "description": "ToDoList is a Symfony web application",
     "license": "proprietary",
     "require": {
         "php": ">=7.1.3",
