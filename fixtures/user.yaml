@@ -1,0 +1,17 @@
+parameters:
+  admin_username: 'admin'
+  admin_password: 'toctoc'
+  admin_access:
+    - "ROLE_ADMIN"
+  user_password: 'toctoc'
+
+App\Entity\User:
+  user{1..3}:
+    username (unique): 'user<current()>'
+    password: '<helpEncodePassword(<{user_password}>)>'
+    email (unique): '<email()>'
+  admin:
+    username (unique): '<{admin_username}>'
+    roles: '<{admin_access}>'
+    password: '<helpEncodePassword(<{admin_password}>)>'
+    email (unique): '<email()>'
