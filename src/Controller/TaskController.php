@@ -25,6 +25,11 @@ class TaskController extends AbstractController
     public function createAction(Request $request)
     {
         $task = new Task();
+        /**
+         * TaskType Disabled author
+         * https://symfony.com/doc/4.4/reference/forms/types/entity.html#disabled
+         **/ 
+        $task->setAuthor($this->getUser());
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
