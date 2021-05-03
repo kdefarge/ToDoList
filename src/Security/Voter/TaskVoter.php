@@ -6,10 +6,18 @@ use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskVoter extends Voter
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     protected function supports($attribute, $subject)
     {
         return in_array($attribute, ['TASK_DELETE'])
@@ -36,6 +44,11 @@ class TaskVoter extends Voter
 
     private function isDelete(Task $task, User $user)
     {
-        return $task->getAuthor() === $user;
+        // The author can remove the stain
+        if ($task->getAuthor() === $user)
+            return true;
+
+        // Only admin can delete an anonymous task
+        return $task->isAnonymous() && $this->security->isGranted('ROLE_ADMIN');
     }
 }
