@@ -116,7 +116,7 @@ class Task
 
     public function getAuthor(): ?User
     {
-        if($this->author)
+        if ($this->author)
             return $this->author;
         $author = new User();
         $author->setUsername("Anonyme");
@@ -132,7 +132,7 @@ class Task
 
     public function isAnonymous()
     {
-        if($this->author)
+        if ($this->author)
             return false;
         return true;
     }
