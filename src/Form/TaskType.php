@@ -33,7 +33,7 @@ class TaskType extends AbstractType implements DataMapperInterface
 
         /** @var FormInterface $forms */
         $forms = iterator_to_array($forms);
-        
+
         $forms['title']->setData($viewData->getTitle());
         $forms['content']->setData($viewData->getContent());
         $forms['author']->setData($viewData->getAuthor()->getUsername());
@@ -41,10 +41,10 @@ class TaskType extends AbstractType implements DataMapperInterface
 
     public function mapFormsToData($forms, &$viewData): void
     {
-         /** @var FormInterface $forms */
+        /** @var FormInterface $forms */
         $forms = iterator_to_array($forms);
 
-         /** @var Task $viewData */
+        /** @var Task $viewData */
         $viewData->setTitle($forms['title']->getData());
         $viewData->setContent($forms['content']->getData());
     }
