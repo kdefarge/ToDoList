@@ -27,6 +27,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
+     * @Assert\Regex(
+     *     pattern="/^(anonyme)$/i",
+     *     match=false,
+     *     message="'anonyme' is a reserved username",
+     * )
      */
     private $username;
 
