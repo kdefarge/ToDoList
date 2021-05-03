@@ -28,7 +28,7 @@ class TaskType extends AbstractType implements DataMapperInterface
     public function mapDataToForms($viewData, $forms): void
     {
         if (!$viewData instanceof Task) {
-            throw new UnexpectedTypeException($viewData, Color::class);
+            throw new UnexpectedTypeException($viewData, Task::class);
         }
 
         /** @var FormInterface $forms */
@@ -41,10 +41,13 @@ class TaskType extends AbstractType implements DataMapperInterface
 
     public function mapFormsToData($forms, &$viewData): void
     {
+        if (!$viewData instanceof Task) {
+            throw new UnexpectedTypeException($viewData, Task::class);
+        }
+
         /** @var FormInterface $forms */
         $forms = iterator_to_array($forms);
 
-        /** @var Task $viewData */
         $viewData->setTitle($forms['title']->getData());
         $viewData->setContent($forms['content']->getData());
     }
