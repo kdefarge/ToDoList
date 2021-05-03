@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +25,26 @@ class UserType extends AbstractType
                 'second_options' => ['label' => 'Tapez le mot de passe à nouveau'],
             ])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Role',
+                'choices' => [
+                    'USER' => null,
+                    'ADMIN' => 'ROLE_ADMIN'
+                ],
+            ])
+            ->get('roles')
+                ->addModelTransformer(new CallbackTransformer(
+                    function ($rolesAsArray) {
+                        if(in_array('ROLE_ADMIN', $rolesAsArray))
+                            return 'ROLE_ADMIN';
+                        return null;
+                    },
+                    function ($rolesAsString) {
+                        if ($rolesAsString === 'ROLE_ADMIN')
+                            return ['ROLE_ADMIN'];
+                        return [];
+                    }
+                ))
         ;
     }
 }
