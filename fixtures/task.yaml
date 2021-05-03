@@ -1,6 +1,12 @@
 App\Entity\Task:
-  task{1..30}:
+  task{1..20}:
     createdAt: '<dateTimeInInterval("-50 days", "-1 days", "Europe/Paris")>'
     title: '<sentence(4)>'
     content: '<realText()>'
     isDone: '<boolean()>'
+  task{21..40}:
+    createdAt: '<dateTimeInInterval("-50 days", "-1 days", "Europe/Paris")>'
+    title: '<sentence(4)>'
+    content: '<realText()>'
+    isDone: '<boolean()>'
+    author: '@user*'
