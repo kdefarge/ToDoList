@@ -12,7 +12,10 @@ ToDoList is a Symfony web application
 -   [Running](#Running)
 -   [Fixture](#Fixture)
 -   [Test](#Test)
+-   [How contribute](#How-contribute)
+-   [Tools used](#Tools-used)
 -   [Maintainers](#Maintainers)
+-   [License](#License)
 
 ## Require
 
@@ -97,6 +100,22 @@ Update .env.test and DATABASE_URL then create the database with schema
 php bin/console doctrine:database:create --env=test
 php bin/console doctrine:schema:create --env=test
 ```
+
+### PHPUnit help
+
+```bash
+php bin/phpunit --help
+```
+
+### Code coverage
+
+```bash
+vendor/bin/phpunit --coverage-html code-coverage
+```
+
+## How contribute
+
+[This documentation explains how you contributed](https://github.com/kdefarge/ToDoList/blob/master/docs/CONTRIBUTE.md)
 
 ## Tools used
 
