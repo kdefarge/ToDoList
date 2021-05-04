@@ -1,0 +1,11 @@
+security:
+  encoders:
+    App\Entity\User:
+      algorithm: auto # This should be the same value as in config/packages/security.yaml
+      cost: 4 # Lowest possible value for bcrypt
+      time_cost: 3 # Lowest possible value for argon
+      memory_cost: 10 # Lowest possible value for argon
+  firewalls:
+  # replace 'main' by the name of your own firewall
+    main:
+      http_basic: ~
