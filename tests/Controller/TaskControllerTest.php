@@ -70,7 +70,7 @@ class TaskControllerTest extends WebTestCase
          *  DONE & READ
          */
         $form = $lastPanel->selectButton('Marquer comme faite')->form();
-        
+
         $client->submit($form);
 
         $crawler = $client->followRedirect();
@@ -93,7 +93,7 @@ class TaskControllerTest extends WebTestCase
 
         $form['task[title]'] = $taskTitle;
         $form['task[content]'] = $taskContent;
-        
+
         $client->submit($form);
 
         $crawler = $client->followRedirect();
@@ -111,13 +111,82 @@ class TaskControllerTest extends WebTestCase
          *  DELETE AND READ
          */
         $form = $lastPanel->selectButton('Supprimer')->form();
-        
+
         $client->submit($form);
 
         $crawler = $client->followRedirect();
 
         $this->assertResponseIsSuccessful();
         $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
-        $this->assertSame(true, $crawler->filter('div.panel')->count() == 40);
+        $this->assertSame(40, $crawler->filter('div.panel')->count());
+    }
+
+    public function testTaskDeleteAnonymousAsAdmin(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/tasks', [], [], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'toctoc',
+        ]);
+
+        $panels = $crawler->filter('div.panel');
+        $this->assertSame(40, $panels->count());
+        
+        //We know the first task is anonymous (fixtures/user.yaml)
+        $form = $panels->first()->selectButton('Supprimer')->form();
+
+        $client->submit($form);
+
+        $crawler = $client->followRedirect();
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
+        $this->assertSame(39, $crawler->filter('div.panel')->count());
+    }
+
+    public function testTaskDeleteAnonymousAsNotAdmin(): void
+    {
+        $client = static::createClient();
+
+        //We know the first task is anonymous (fixtures/user.yaml)
+        $client->request('POST', '/tasks/1/delete', [
+            '_method' => 'DELETE'
+        ], [], [
+            'PHP_AUTH_USER' => 'user1',
+            'PHP_AUTH_PW'   => 'toctoc',
+        ]);
+
+        $this->assertResponseStatusCodeSame('403');
+    }
+
+    public function testTaskDeleteAsNotAuthor(): void
+    {
+        /**
+         * We know the 20 last task is not admin author and not anonymous (fixtures/task.yaml)
+         * In this version admin can't delete other task except is anonymous
+         */
+        $client = static::createClient();
+
+        // Delete Anonymous task for check the correct request
+        $crawler = $client->request('POST', '/tasks/1/delete', [
+            '_method' => 'DELETE'
+        ], [], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'toctoc',
+        ]);
+
+        $crawler = $client->followRedirect();
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
+        $this->assertSame(39, $crawler->filter('div.panel')->count());
+
+        // Try delete task with another author
+        $client->request('POST', '/tasks/21/delete', [
+            '_method' => 'DELETE'
+        ]);
+
+        $this->assertResponseStatusCodeSame('403');
     }
 }
