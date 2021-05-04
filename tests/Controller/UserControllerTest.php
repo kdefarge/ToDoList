@@ -9,14 +9,14 @@ class UserControllerTest extends WebTestCase
 {
     use ReloadDatabaseTrait;
 
-    public function testUserListGuest(): void
+    public function testUserListAsGuest(): void
     {
         $client = static::createClient();
         $client->request('GET', '/users');
         $this->assertResponseRedirects('http://localhost/login', 302);
     }
 
-    public function testUserListUser(): void
+    public function testUserListAsUser(): void
     {
         $client = static::createClient();
 
@@ -28,7 +28,7 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame('403');
     }
 
-    public function testUserListAdmin(): void
+    public function testUserListAsAdmin(): void
     {
         $client = static::createClient();
 
@@ -41,14 +41,14 @@ class UserControllerTest extends WebTestCase
         $this->assertSame(true, $crawler->selectLink('Edit')->count() == 4);
     }
 
-    public function testUserCreateGuest(): void
+    public function testUserCreateAsGuest(): void
     {
         $client = static::createClient();
         $client->request('GET', '/users/create');
         $this->assertResponseRedirects('http://localhost/login', 302);
     }
 
-    public function testUserCreateUser(): void
+    public function testUserCreateAsUser(): void
     {
         $client = static::createClient();
 
@@ -60,7 +60,7 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame('403');
     }
 
-    public function testUserCreateAdmin(): void
+    public function testUserCreateAndUpdateAsAdmin(): void
     {
         $client = static::createClient();
 
@@ -113,7 +113,7 @@ class UserControllerTest extends WebTestCase
         $form['user[roles]']            = 1;
 
         $client->submit($form);
-        
+
         $crawler = $client->followRedirect();
 
         $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
@@ -127,5 +127,23 @@ class UserControllerTest extends WebTestCase
 
         $client->request('GET', '/users/' . $userIdNotExist . '/edit');
         $this->assertResponseStatusCodeSame('404');
+    }
+
+    public function testUserFormSelectedRoleIsAdmin(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/users', [], [], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'toctoc',
+        ]);
+        // Check admin in the form is update (the last user fixture is admin)
+        $crawler = $client->click($crawler->selectLink('Edit')->last()->link());
+
+        $this->assertResponseIsSuccessful();
+
+        $selectUserRoles = $crawler->filter('select#user_roles [selected=selected]');
+        $this->assertSame(1, $selectUserRoles->count());
+        $this->assertSame('ADMIN', $selectUserRoles->text());
     }
 }
