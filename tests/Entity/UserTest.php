@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Tests\Entity;
+
+use App\Entity\Task;
+use App\Entity\User;
+use PHPUnit\Framework\TestCase;
+
+class UserTest extends TestCase
+{
+    public function testEntityUser(): void
+    {
+        $username = 'testname';
+        $userpassword = 'password';
+        $useremail = 'email@example.com';
+        $user = new User();
+        $user->setUsername($username);
+        $this->assertSame($username, $user->getUsername());
+        $this->assertTrue(in_array('ROLE_USER', $user->getRoles()));
+        $user->setRoles(['ROLE_ADMIN']);
+        $this->assertTrue(in_array('ROLE_USER', $user->getRoles()));
+        $this->assertTrue(in_array('ROLE_ADMIN', $user->getRoles()));
+        $user->setPassword($userpassword);
+        $this->assertSame($userpassword, $user->getPassword());
+        $user->setEmail($useremail);
+        $this->assertSame($useremail, $user->getEmail());
+        $this->assertSame(0, $user->getTasks()->count());
+        $task = new Task();
+        $user->addTask($task);
+        $this->assertSame(1, $user->getTasks()->count());
+        $user->addTask($task);
+        $this->assertSame(1, $user->getTasks()->count());
+        $this->assertTrue($user->getTasks()->contains($task));
+        $user->removeTask($task);
+        $this->assertSame(0, $user->getTasks()->count());
+    }
+}
