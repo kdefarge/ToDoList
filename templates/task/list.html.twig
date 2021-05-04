@@ -18,12 +18,9 @@
 						</h4>
 					</div>
 					<div class="panel-body">
-                        {{ task.content }}
+                        <p>{{ task.content }}</p>
 						<form action="{{ path('task_toggle', {'id' : task.id }) }}">
-							<button class="btn btn-success btn-sm pull-right">
-								{% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée
-								{% endif %}
-							</button>
+							<button class="btn btn-success btn-sm pull-right">{{ task.isDone ? 'Marquer non terminée' : 'Marquer comme faite' }}</button>
 						</form>
 						{% if is_granted('TASK_DELETE', task) %}
 							<form action="{{ path('task_delete', {'id' : task.id }) }}" method="post">
@@ -33,7 +30,7 @@
 						{% endif %}
 					</div>
 					<div class="panel-footer">
-                        {{ task.author is null ? '' : 'Auteur : ' ~ task.author.username }}
+                        {{ task.author is null ? '' : ('Auteur : <span class="task-author">' ~ task.author.username ~ '</span>')|raw }}
 					</div>
 				</div>
 			</div>
