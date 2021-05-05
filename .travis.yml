@@ -25,8 +25,8 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - vendor/bin/phpunit --coverage-clover coverage.xml
+  - vendor/bin/phpunit --coverage-clover clover.xml
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - ./cc-test-reporter after-build -t coverage --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
