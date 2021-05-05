@@ -2,7 +2,10 @@
 
 [![SymfonyInsight](https://insight.symfony.com/projects/5237d936-c1e7-4301-ab67-c3e090224d7b/mini.svg)](https://insight.symfony.com/projects/5237d936-c1e7-4301-ab67-c3e090224d7b)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9cbfa619b9ed44a4b477095226115de4)](https://www.codacy.com/gh/kdefarge/ToDoList/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kdefarge/ToDoList&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://www.travis-ci.com/kdefarge/ToDoList.svg?branch=master)](https://www.travis-ci.com/kdefarge/ToDoList)
 [![codecov](https://codecov.io/gh/kdefarge/ToDoList/branch/master/graph/badge.svg?token=I18BX5D0I4)](https://codecov.io/gh/kdefarge/ToDoList)
+[![Maintainability](https://api.codeclimate.com/v1/badges/222e8cafac94fd6c0eab/maintainability)](https://codeclimate.com/github/kdefarge/ToDoList/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/222e8cafac94fd6c0eab/test_coverage)](https://codeclimate.com/github/kdefarge/ToDoList/test_coverage)
 
 ToDoList is a Symfony web application
 
