@@ -1,9 +1,12 @@
 security:
     encoders:
         App\Entity\User:
+            # Use native password encoder
+            # This value auto-selects the best possible hashing algorithm
+            # (i.e. Sodium when available).
             algorithm: auto
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    # https://symfony.com/doc/4.4/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
@@ -15,18 +18,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            # anonymous: lazy
             provider: app_user_provider
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
             anonymous: ~
             pattern: ^/
             form_login:
-                login_path: login
+                login_path: login # in SecurityController.php
                 check_path: login_check
                 always_use_default_target_path:  true
                 default_target_path:  /
