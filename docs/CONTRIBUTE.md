@@ -4,6 +4,7 @@ This documentation will explain how to make changes to the project
 
 ## Table of Contents
 
+-   [Check existing Issues and Pull Requests](#Check-existing-Issues-and-Pull-Requests)
 -   [Setup your Environment](#Setup-your-Environment)
     -   [Install the Software Stack](#Install-the-Software-Stack)
     -   [Configure Git](#Configure-Git)
@@ -17,6 +18,12 @@ This documentation will explain how to make changes to the project
     -   [Make a Pull Request](#Make-a-Pull-Request)
     -   [Rework-your-Pull-Request](#Make-a-Pull-Request)
 -   [License](#License)
+
+## Check existing Issues and Pull Requests
+
+Before working on a change, check to see if someone else also raised the topic or maybe even started working on a PR by searching on GitHub.
+
+If you can't find an answer, start your change by opening a issue.
 
 ## Setup your Environment
 
