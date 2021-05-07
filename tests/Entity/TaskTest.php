@@ -8,25 +8,39 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
-    public function testEntityTask(): void
+    public function testEntityTaskCreatedAt(): void
     {
-
         $task = new task();
         
         $createAt = new \Datetime();
         $this->assertNotSame($createAt, $task->getCreatedAt());
         $task->setCreatedAt($createAt);
         $this->assertSame($createAt, $task->getCreatedAt());
+    }
+
+    public function testEntityTaskTitle(): void
+    {
+        $task = new task();
 
         $title = 'title';
         $this->assertNotSame($title, $task->getTitle());
         $task->setTitle($title);
         $this->assertSame($title, $task->getTitle());
+    }
+
+    public function testEntityTaskContent(): void
+    {
+        $task = new task();
 
         $content = 'content';
         $this->assertNotSame($content, $task->getContent());
         $task->setContent($content);
         $this->assertSame($content, $task->getContent());
+    }
+
+    public function testEntityTaskIsDone(): void
+    {
+        $task = new task();
 
         $this->assertNotTrue($task->getIsDone());
         $this->assertNotTrue($task->isDone());
@@ -40,6 +54,11 @@ class TaskTest extends TestCase
         $this->assertTrue($task->getIsDone());
         $this->assertTrue($task->isDone());
         $task->toggle(false);
+    }
+
+    public function testEntityTaskAuthor(): void
+    {
+        $task = new task();
 
         $author = new user();
         $this->assertTrue($task->isAnonymous());
