@@ -23,7 +23,7 @@ This documentation will explain how to make changes to the project
 
 Before working on a change, check to see if someone else also raised the topic or maybe even started working on a PR by searching on GitHub.
 
-If you can't find an answer, start your change by opening a issue.
+If you can't find an answer, start your change by opening an issue.
 
 ## Setup your Environment
 
